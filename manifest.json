@@ -1,0 +1,17 @@
+{
+  "name": "Reddit Bar",
+  "version": "1.0",
+  "description": "Subreddit bar customizer",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://reddit.com/*",
+        "https://reddit.com/*",
+        "http://*.reddit.com/*",
+        "https://*.reddit.com/*"
+      ],
+      "js": ["jquery-1.7.2.min.js", "subreddit.js"]
+    }
+  ]
+}
+
