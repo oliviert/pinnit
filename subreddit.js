@@ -1,3 +1,9 @@
+var pins = localStorage.getItem('pins');
+if (pins) {
+  pins = JSON.parse(pins);
+} else {
+  pins = [];
+}
 var $bar = $('.sr-list');
 var $customBar = $('.flat-list.sr-bar.hover:eq(1)');
 var subreddits = ['nba', 'madmen', 'gameofthrones', 'programming', 
@@ -7,11 +13,37 @@ var i, len;
 $customBar.empty();
 $bar.children('span.separator:eq(1)').remove();
 $bar.children('.flat-list.sr-bar.hover:eq(2)').remove();
-for (i = 0, len = subreddits.length; i < len; ++i) {
+for (i = 0, len = pins.length; i < len; ++i) {
   if (i != 0) {
     $customBar.append('<li><span class="separator">-</span>'+
-                    '<a href="http://reddit.com/r/'+subreddits[i]+'/">'+subreddits[i]+'</a></li>');
+                    '<a href="http://reddit.com/r/'+pins[i]+'/">'+pins[i]+'</a></li>');
   } else {
-    $customBar.append('<li><a href="http://reddit.com/r/'+subreddits[i]+'/">'+subreddits[i]+'</a></li>');
+    $customBar.append('<li><a href="http://reddit.com/r/'+pins[i]+'/">'+pins[i]+'</a></li>');
   }
 }
+var name = $('span.redditname').children('a').text();
+var $subscribe = $('div.titlebox span.fancy-toggle-button');
+$subscribe.after('<span class="fancy-toggle-button toggle">'+
+                '<a class="option active add" id="pin" href="#"'+ 
+                'tabindex="100")">pin</a></span>');
+$pin = $('span.fancy-toggle-button a#pin');
+$pin.click(function() {
+  event.preventDefault();
+  if ($pin.hasClass('add')) {
+    pins.push(name);
+    localStorage.setItem('pins', JSON.stringify(pins));
+    if (pins.length > 1) {
+      $customBar.append('<li><span class="separator">-</span>'+
+                        '<a href="http://reddit.com/r/'+name+'/">'+name+'</a></li>');
+    } else {
+      $customBar.append('<li><a href="http://reddit.com/r/'+name+'/">'+name+'</a></li>');
+    }
+    $pin.removeClass('add').addClass('remove');
+  } else {
+    pins = jQuery.grep(pins, function(value) {
+      return value != name;
+    });
+    localStorage.setItem('pins', JSON.stringify(pins));
+    $pin.removeClass('remove').addClass('add');
+  }
+});
