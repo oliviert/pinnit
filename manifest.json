@@ -1,7 +1,7 @@
 {
-  "name": "Reddit Pin",
+  "name": "Pinnit",
   "version": "1.0",
-  "description": "Subreddit bar customizer",
+  "description": "Customize your subreddit bar on Reddit",
   "content_scripts": [
     {
       "matches": [
