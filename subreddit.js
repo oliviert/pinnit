@@ -23,9 +23,15 @@ for (i = 0, len = pins.length; i < len; ++i) {
 }
 var name = $('span.redditname').children('a').text();
 var $subscribe = $('div.titlebox span.fancy-toggle-button');
-$subscribe.after('<span class="fancy-toggle-button toggle">'+
-                '<a class="option active add" id="pin" href="#"'+ 
-                'tabindex="100")">pin</a></span>');
+if ($.inArray(name, pins) == -1) {
+  $subscribe.after('<span class="fancy-toggle-button toggle">'+
+                   '<a class="option active add" id="pin" href="#"'+ 
+                   'tabindex="100")">pin</a></span>');
+} else {
+  $subscribe.after('<span class="fancy-toggle-button toggle">'+
+                   '<a class="option active remove" id="pin" href="#"'+ 
+                   'tabindex="100")">unpin</a></span>');
+}
 $pin = $('span.fancy-toggle-button a#pin');
 $pin.click(function() {
   event.preventDefault();
@@ -41,7 +47,7 @@ $pin.click(function() {
     } else {
       $customBar.append('<li><a href="http://reddit.com/r/'+name+'/" id="'+name+'">'+name+'</a></li>');
     }
-    $pin.removeClass('add').addClass('remove');
+    $pin.removeClass('add').addClass('remove').text('unpin');
   } else {
     if ($.inArray(name, pins) == -1) {
       return;
@@ -52,6 +58,6 @@ $pin.click(function() {
     localStorage.setItem('pins', JSON.stringify(pins));
     $customBar.children('li').children('a#'+name).remove();
     $customBar.children('li').children('span#'+name).remove();
-    $pin.removeClass('remove').addClass('add');
+    $pin.removeClass('remove').addClass('add').text('pin');
   }
 });
