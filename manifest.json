@@ -1,5 +1,5 @@
 {
-  "name": "Reddit Bar",
+  "name": "Pinnit",
   "version": "1.0",
   "description": "Subreddit bar customizer",
   "content_scripts": [
