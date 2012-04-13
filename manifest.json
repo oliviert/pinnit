@@ -10,7 +10,7 @@
         "http://*.reddit.com/*",
         "https://*.reddit.com/*"
       ],
-      "js": ["jquery-1.7.2.min.js", "subreddit.js"]
+      "js": ["jquery-1.7.2.min.js", "pin.js"]
     }
   ]
 }
