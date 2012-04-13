@@ -15,10 +15,10 @@ $bar.children('span.separator:eq(1)').remove();
 $bar.children('.flat-list.sr-bar.hover:eq(2)').remove();
 for (i = 0, len = pins.length; i < len; ++i) {
   if (i != 0) {
-    $customBar.append('<li><span class="separator">-</span>'+
-                    '<a href="http://reddit.com/r/'+pins[i]+'/">'+pins[i]+'</a></li>');
+    $customBar.append('<li><span class="separator" id="'+pins[i]+'">-</span>'+
+                    '<a href="http://reddit.com/r/'+pins[i]+'/" id="'+pins[i]+'">'+pins[i]+'</a></li>');
   } else {
-    $customBar.append('<li><a href="http://reddit.com/r/'+pins[i]+'/">'+pins[i]+'</a></li>');
+    $customBar.append('<li><a href="http://reddit.com/r/'+pins[i]+'/" id="'+pins[i]+'">'+pins[i]+'</a></li>');
   }
 }
 var name = $('span.redditname').children('a').text();
@@ -33,10 +33,10 @@ $pin.click(function() {
     pins.push(name);
     localStorage.setItem('pins', JSON.stringify(pins));
     if (pins.length > 1) {
-      $customBar.append('<li><span class="separator">-</span>'+
-                        '<a href="http://reddit.com/r/'+name+'/">'+name+'</a></li>');
+      $customBar.append('<li><span class="separator" id="'+name+'">-</span>'+
+                        '<a href="http://reddit.com/r/'+name+'/" id="'+name+'">'+name+'</a></li>');
     } else {
-      $customBar.append('<li><a href="http://reddit.com/r/'+name+'/">'+name+'</a></li>');
+      $customBar.append('<li><a href="http://reddit.com/r/'+name+'/" id="'+name+'">'+name+'</a></li>');
     }
     $pin.removeClass('add').addClass('remove');
   } else {
@@ -44,6 +44,8 @@ $pin.click(function() {
       return value != name;
     });
     localStorage.setItem('pins', JSON.stringify(pins));
+    $customBar.children('li').children('a#'+name).remove();
+    $customBar.children('li').children('span#'+name).remove();
     $pin.removeClass('remove').addClass('add');
   }
 });
