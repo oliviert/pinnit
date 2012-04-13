@@ -30,6 +30,9 @@ $pin = $('span.fancy-toggle-button a#pin');
 $pin.click(function() {
   event.preventDefault();
   if ($pin.hasClass('add')) {
+    if ($.inArray(name, pins) > -1) {
+      return;
+    }
     pins.push(name);
     localStorage.setItem('pins', JSON.stringify(pins));
     if (pins.length > 1) {
@@ -40,6 +43,9 @@ $pin.click(function() {
     }
     $pin.removeClass('add').addClass('remove');
   } else {
+    if ($.inArray(name, pins) == -1) {
+      return;
+    }
     pins = jQuery.grep(pins, function(value) {
       return value != name;
     });
